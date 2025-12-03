@@ -1,0 +1,7 @@
+{
+  "name": "ome-ecosystem-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
