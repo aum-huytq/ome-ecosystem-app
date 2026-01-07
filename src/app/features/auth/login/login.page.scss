@@ -1,0 +1,145 @@
+.auth-header ion-toolbar {
+  --background: #f1c232;
+  --color: #111;
+}
+
+.auth-header ion-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.auth-page {
+  --background: #f4f5f7;
+}
+
+.auth-wrapper {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: calc(100vh - 56px);
+}
+
+.logo {
+  text-align: center;
+  margin: 24px 0 16px;
+
+  img {
+    width: 96px;
+  }
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 20px 16px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  background: #e9edf4;
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 0;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #fff;
+  color: #111;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Inputs */
+.input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.input ion-icon {
+  font-size: 18px;
+  color: #2563eb;
+  margin-right: 8px;
+}
+
+.input input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+}
+
+.otp-btn {
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 13px;
+}
+
+/* Buttons */
+.primary-btn {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 14px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.divider {
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 16px 0;
+}
+
+.social {
+  display: flex;
+  gap: 12px;
+}
+
+.social button {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.forgot {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #2563eb;
+  margin-top: 6px;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin: 4px 0 8px 8px;
+}

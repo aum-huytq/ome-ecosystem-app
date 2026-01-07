@@ -1,0 +1,19 @@
+{
+  "auth": {
+    "register": {
+      "title": "Đăng ký",
+      "phone": "Số điện thoại",
+      "otp": "Nhập mã OTP",
+      "sendOtp": "Gửi OTP",
+      "password": "Mật khẩu",
+      "confirmPassword": "Nhập lại mật khẩu",
+      "submit": "Đăng ký"
+    },
+    "login": {
+      "title": "Đăng nhập"
+    },
+    "common": {
+      "or": "Đăng nhập với"
+    }
+  }
+}

@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  e5ApiBaseUrl: 'http://192.168.0.197:8080', // Địa chỉ E5 của bạn
+  googleClientId: '932910135402-qv079mna0ush63t4nb499kg0anqf8nlp.apps.googleusercontent.com',
+  facebookAppId: '889332014042179',
 };
 
 /*

@@ -1,0 +1,24 @@
+{
+  "auth": {
+    "common": {
+      "title": "Đăng nhập / Đăng ký",
+      "or": "Đăng nhập với"
+    },
+    "login": {
+      "title": "Đăng nhập"
+    },
+    "register": {
+      "title": "Đăng ký",
+      "phone": "Số điện thoại",
+      "otp": "Gửi OTP",
+      "password": "Mật khẩu",
+      "confirm_password": "Nhập lại mật khẩu",
+      "submit": "Đăng ký",
+      "password_mismatch": "Mật khẩu nhập lại không khớp",
+      "success": "Đăng ký thành công"
+    }
+  },
+  "common": {
+    "error": "Có lỗi xảy ra"
+  }
+}

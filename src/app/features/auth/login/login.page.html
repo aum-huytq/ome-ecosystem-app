@@ -1,0 +1,131 @@
+<ion-header class="auth-header">
+  <ion-toolbar>
+    <ion-title>Đăng nhập / Đăng ký</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="auth-page">
+  <div class="auth-wrapper">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <img src="assets/images/logo/e-teaching.png" alt="E-Teaching" />
+    </div>
+
+    <!-- CARD -->
+    <div class="auth-card">
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="tab-btn" [class.active]="mode === 'login'" (click)="mode='login'">
+          Đăng nhập
+        </button>
+        <button class="tab-btn" [class.active]="mode === 'register'" (click)="mode='register'">
+          Đăng ký
+        </button>
+      </div>
+
+      <!-- ============ LOGIN ============ -->
+      <form *ngIf="mode==='login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+        <div class="input">
+          <ion-icon name="mail-outline"></ion-icon>
+          <input type="text" placeholder="SĐT" formControlName="phone" />
+        </div>
+        <div class="error" *ngIf="loginForm.get('phone')?.touched && loginForm.get('phone')?.invalid">
+          Vui lòng nhập Email hoặc SĐT
+        </div>
+
+        <div class="input">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input type="password" placeholder="Mật khẩu" formControlName="password" />
+        </div>
+        <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          Mật khẩu tối thiểu 6 ký tự
+        </div>
+
+        <a class="forgot" (click)="goToForgotPassword()">Quên mật khẩu?</a>
+
+        <button class="primary-btn" type="submit" [disabled]="isSubmitting">
+          Đăng nhập
+        </button>
+
+        <div class="divider">Đăng nhập với</div>
+
+        <div class="social">
+          <button type="button" (click)="onLoginWithGoogle()">
+            <img src="assets/images/icon/google.svg" /> Google
+          </button>
+          <button type="button" (click)="onLoginWithFacebook()">
+            <img src="assets/images/icon/facebook.svg" /> Facebook
+          </button>
+        </div>
+      </form>
+
+      <!-- ============ REGISTER ============ -->
+      <form *ngIf="mode==='register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+        <div class="input">
+          <ion-icon name="person-outline"></ion-icon>
+          <input type="text" placeholder="Họ và tên" formControlName="fullName" />
+        </div>
+        <div class="error" *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
+          Vui lòng nhập họ tên
+        </div>
+
+        <div class="input">
+          <ion-icon name="mail-outline"></ion-icon>
+          <input type="email" placeholder="Email (không bắt buộc)" formControlName="email" />
+        </div>
+        <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+          Email không hợp lệ
+        </div>
+
+        <div class="input">
+          <ion-icon name="call-outline"></ion-icon>
+          <input type="text" placeholder="Số điện thoại" formControlName="phone" />
+          <button type="button" class="otp-btn" (click)="sendOtp()" [disabled]="otpSending">
+            {{ otpSending ? 'Đang gửi...' : 'Gửi OTP' }}
+          </button>
+        </div>
+        <div class="error" *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid">
+          Vui lòng nhập số điện thoại
+        </div>
+
+        <div class="input">
+          <ion-icon name="key-outline"></ion-icon>
+          <input type="text" placeholder="Nhập mã OTP" formControlName="otp_code" />
+        </div>
+        <div class="error" *ngIf="registerForm.get('otp_code')?.touched && registerForm.get('otp_code')?.invalid">
+          Vui lòng nhập mã OTP
+        </div>
+
+        <div class="input">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input type="password" placeholder="Mật khẩu" formControlName="password" />
+        </div>
+
+        <div class="input">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input type="password" placeholder="Nhập lại mật khẩu" formControlName="confirmPassword" />
+        </div>
+
+        <button class="primary-btn" type="submit" [disabled]="isSubmitting">
+          Đăng ký
+        </button>
+
+        <div class="divider">Hoặc</div>
+
+        <div class="social">
+          <button type="button" (click)="onRegisterWithGoogle()">
+            <img src="assets/images/icon/google.svg" /> Google
+          </button>
+          <button type="button" (click)="onRegisterWithFacebook()">
+            <img src="assets/images/icon/facebook.svg" /> Facebook
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</ion-content>
