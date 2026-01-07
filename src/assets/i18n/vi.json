@@ -1,24 +1,37 @@
 {
-  "auth": {
-    "common": {
-      "title": "Đăng nhập / Đăng ký",
-      "or": "Đăng nhập với"
-    },
-    "login": {
-      "title": "Đăng nhập"
-    },
-    "register": {
-      "title": "Đăng ký",
-      "phone": "Số điện thoại",
-      "otp": "Gửi OTP",
-      "password": "Mật khẩu",
-      "confirm_password": "Nhập lại mật khẩu",
-      "submit": "Đăng ký",
-      "password_mismatch": "Mật khẩu nhập lại không khớp",
-      "success": "Đăng ký thành công"
-    }
+  "AUTH": {
+    "TITLE": "Đăng nhập / Đăng ký",
+    "LOGIN": "Đăng nhập",
+    "REGISTER": "Đăng ký",
+    "LOGIN_WITH": "Đăng nhập với",
+    "OR": "Hoặc",
+
+    "PHONE": "Số điện thoại",
+    "EMAIL_OPTIONAL": "Email (không bắt buộc)",
+    "FULLNAME": "Họ và tên",
+    "PASSWORD": "Mật khẩu",
+    "CONFIRM_PASSWORD": "Nhập lại mật khẩu",
+    "OTP": "Mã OTP",
+    "SEND_OTP": "Gửi OTP",
+
+    "FORGOT_PASSWORD": "Quên mật khẩu?",
+
+    "PHONE_REQUIRED": "Vui lòng nhập số điện thoại",
+    "PASSWORD_INVALID": "Mật khẩu tối thiểu 10 ký tự, có chữ hoa hoặc ký tự đặc biệt",
+    "PASSWORD_NOT_MATCH": "Mật khẩu nhập lại không khớp",
+    "REQUIRED": "Trường này là bắt buộc",
+
+    "OTP_SENT": "Đã gửi OTP",
+    "CHECK_PHONE": "Vui lòng kiểm tra tin nhắn",
+    "OTP_FAILED": "Gửi OTP thất bại",
+    "OTP_REQUIRED": "Chưa có mã OTP",
+    "PLEASE_ENTER_OTP": "Vui lòng nhập mã OTP",
+
+    "LOGIN_FAILED": "Đăng nhập thất bại",
+    "REGISTER_FAILED": "Đăng ký thất bại",
+    "SSO_FAILED": "Đăng nhập mạng xã hội thất bại"
   },
-  "common": {
-    "error": "Có lỗi xảy ra"
+  "COMMON": {
+    "TRY_AGAIN": "Vui lòng thử lại"
   }
 }

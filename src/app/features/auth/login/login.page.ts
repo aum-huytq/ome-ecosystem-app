@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService, OAuthProvider } from '../../../core/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { strongPasswordValidator } from '../../../shared/validators/password.validator';
 
 type AuthMode = 'login' | 'register';
 
@@ -27,7 +29,10 @@ export class LoginPage implements OnInit {
     private auth: AuthService,
     private router: Router,
     private alertCtrl: AlertController,
-  ) {}
+    private translate: TranslateService,
+  ) {
+    this.translate.use('vi');
+  }
 
   // ================= INIT =================
   ngOnInit(): void {
@@ -36,19 +41,19 @@ export class LoginPage implements OnInit {
   }
 
   private initForms(): void {
-    // ===== LOGIN FORM =====
+    // ===== LOGIN (PHONE + PASSWORD) =====
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      phone: ['', Validators.required],
+      password: ['', [Validators.required, strongPasswordValidator]],
     });
 
-    // ===== REGISTER FORM =====
+    // ===== REGISTER =====
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
-      email: ['', Validators.email], // không required
+      email: ['', Validators.email], // optional
       phone: ['', Validators.required],
       otp_code: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, strongPasswordValidator]],
       confirmPassword: ['', Validators.required],
     });
   }
@@ -67,7 +72,10 @@ export class LoginPage implements OnInit {
     this.auth.login(phone, password).subscribe({
       next: () => this.router.navigate(['/profile']),
       error: err => {
-        this.showAlert('Đăng nhập thất bại', err?.message || 'Vui lòng thử lại');
+        this.showAlert(
+          this.t('AUTH.LOGIN_FAILED'),
+          err?.message || this.t('COMMON.TRY_AGAIN'),
+        );
         this.isSubmitting = false;
       },
       complete: () => (this.isSubmitting = false),
@@ -82,7 +90,10 @@ export class LoginPage implements OnInit {
     }
 
     if (!this.otpSent) {
-      this.showAlert('Thiếu OTP', 'Vui lòng gửi và nhập mã OTP');
+      this.showAlert(
+        this.t('AUTH.OTP_REQUIRED'),
+        this.t('AUTH.PLEASE_ENTER_OTP'),
+      );
       return;
     }
 
@@ -96,7 +107,10 @@ export class LoginPage implements OnInit {
     } = this.registerForm.value;
 
     if (password !== confirmPassword) {
-      this.showAlert('Lỗi mật khẩu', 'Mật khẩu nhập lại không khớp');
+      this.showAlert(
+        this.t('AUTH.PASSWORD_ERROR'),
+        this.t('AUTH.PASSWORD_NOT_MATCH'),
+      );
       return;
     }
 
@@ -113,7 +127,10 @@ export class LoginPage implements OnInit {
       .subscribe({
         next: () => this.router.navigate(['/profile']),
         error: err => {
-          this.showAlert('Đăng ký thất bại', err?.message || 'Vui lòng thử lại');
+          this.showAlert(
+            this.t('AUTH.REGISTER_FAILED'),
+            err?.message || this.t('COMMON.TRY_AGAIN'),
+          );
           this.isSubmitting = false;
         },
         complete: () => (this.isSubmitting = false),
@@ -137,17 +154,17 @@ export class LoginPage implements OnInit {
         purpose: 'signup',
       })
       .subscribe({
-        next: async res => {
+        next: () => {
           this.otpSent = true;
-          await this.showAlert(
-            'Gửi OTP thành công',
-            res?.message || 'Mã OTP đã được gửi',
+          this.showAlert(
+            this.t('AUTH.OTP_SENT'),
+            this.t('AUTH.CHECK_PHONE'),
           );
         },
-        error: async err => {
-          await this.showAlert(
-            'Không gửi được OTP',
-            err?.message || 'Vui lòng thử lại',
+        error: err => {
+          this.showAlert(
+            this.t('AUTH.OTP_FAILED'),
+            err?.message || this.t('COMMON.TRY_AGAIN'),
           );
         },
         complete: () => (this.otpSending = false),
@@ -194,15 +211,15 @@ export class LoginPage implements OnInit {
         },
         error: err => {
           this.showAlert(
-            'SSO thất bại',
-            err?.message || `Không đăng nhập được bằng ${provider}`,
+            this.t('AUTH.SSO_FAILED'),
+            err?.message || this.t('COMMON.TRY_AGAIN'),
           );
           this.isSubmitting = false;
         },
       });
   }
 
-  // ================= ALERT =================
+  // ================= HELPERS =================
   private async showAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
       header,
@@ -212,7 +229,11 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  goToForgotPassword(): void {
-    this.router.navigate(['/auth/forgot-password']);
+  private t(key: string): string {
+    return this.translate.instant(key);
+  }
+
+  goToForgotPassword(){
+    
   }
 }
