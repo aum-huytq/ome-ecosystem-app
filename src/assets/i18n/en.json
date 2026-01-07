@@ -1,37 +1,48 @@
 {
   "AUTH": {
-    "TITLE": "Đăng nhập / Đăng ký",
-    "LOGIN": "Đăng nhập",
-    "REGISTER": "Đăng ký",
-    "LOGIN_WITH": "Đăng nhập với",
-    "OR": "Hoặc",
+    "TITLE": "Login / Register",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "OR": "Or",
 
-    "PHONE": "Số điện thoại",
-    "EMAIL_OPTIONAL": "Email (không bắt buộc)",
-    "FULLNAME": "Họ và tên",
-    "PASSWORD": "Mật khẩu",
-    "CONFIRM_PASSWORD": "Nhập lại mật khẩu",
-    "OTP": "Mã OTP",
-    "SEND_OTP": "Gửi OTP",
+    "FULLNAME": "Full name",
+    "FULLNAME_REQUIRED": "Please enter your full name",
 
-    "FORGOT_PASSWORD": "Quên mật khẩu?",
+    "EMAIL_OPTIONAL": "Email (optional)",
+    "EMAIL_INVALID": "Invalid email format",
 
-    "PHONE_REQUIRED": "Vui lòng nhập số điện thoại",
-    "PASSWORD_INVALID": "Mật khẩu tối thiểu 10 ký tự, có chữ hoa hoặc ký tự đặc biệt",
-    "PASSWORD_NOT_MATCH": "Mật khẩu nhập lại không khớp",
-    "REQUIRED": "Trường này là bắt buộc",
+    "PHONE": "Phone number",
+    "PHONE_REQUIRED": "Phone number is required",
 
-    "OTP_SENT": "Đã gửi OTP",
-    "CHECK_PHONE": "Vui lòng kiểm tra tin nhắn",
-    "OTP_FAILED": "Gửi OTP thất bại",
-    "OTP_REQUIRED": "Chưa có mã OTP",
-    "PLEASE_ENTER_OTP": "Vui lòng nhập mã OTP",
+    "OTP": "OTP code",
+    "OTP_REQUIRED": "OTP is required",
+    "SEND_OTP": "Send OTP",
 
-    "LOGIN_FAILED": "Đăng nhập thất bại",
-    "REGISTER_FAILED": "Đăng ký thất bại",
-    "SSO_FAILED": "Đăng nhập mạng xã hội thất bại"
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "CONFIRM_PASSWORD_REQUIRED": "Please confirm your password",
+
+    "PASSWORD_RULE": "Password must be at least 10 characters and contain uppercase or special character",
+    "PASSWORD_ERROR": "Password error",
+    "PASSWORD_NOT_MATCH": "Passwords do not match",
+
+    "FORGOT_PASSWORD": "Forgot password?",
+
+    "LOGIN_FAILED": "Login failed",
+    "REGISTER_FAILED": "Register failed",
+    "SSO_FAILED": "Social login failed",
+
+    "OTP_REQUIRED_TITLE": "OTP required",
+    "OTP_REQUIRED": "Missing OTP",
+    "PLEASE_ENTER_OTP": "Please enter OTP to continue",
+
+    "OTP_SENT": "OTP sent",
+    "CHECK_PHONE": "Please check your phone messages",
+
+    "OTP_FAILED": "Failed to send OTP"
   },
+
   "COMMON": {
-    "TRY_AGAIN": "Vui lòng thử lại"
+    "TRY_AGAIN": "Please try again"
   }
 }

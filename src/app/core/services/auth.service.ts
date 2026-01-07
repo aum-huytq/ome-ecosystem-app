@@ -51,7 +51,6 @@ export class AuthService {
   register(payload: {
     fullName: string;
     otp_code:string;
-    email:string;
     phone?: string;
     password: string;
   }): Observable<UserProfile> {
@@ -59,7 +58,6 @@ export class AuthService {
       .post<ApiAuthResponse>(`${this.api}/app/v1/register`, {
         password: payload.password,
         otp_code: payload.otp_code,
-        email: payload.email,
         full_name: payload.fullName,
         phone: payload.phone,
       })

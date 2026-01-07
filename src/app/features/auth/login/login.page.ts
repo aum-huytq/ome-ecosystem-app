@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
   }
 
   private initForms(): void {
-    // ===== LOGIN (PHONE + PASSWORD) =====
+    // ===== LOGIN =====
     this.loginForm = this.fb.group({
       phone: ['', Validators.required],
       password: ['', [Validators.required, strongPasswordValidator]],
@@ -57,6 +57,17 @@ export class LoginPage implements OnInit {
       confirmPassword: ['', Validators.required],
     });
   }
+
+  switchMode(mode: AuthMode) {
+    this.mode = mode;
+
+    if (mode === 'login') {
+      this.registerForm.reset();
+    } else {
+      this.loginForm.reset();
+    }
+  }
+
 
   // ================= LOGIN =================
   onLogin(): void {
@@ -99,7 +110,6 @@ export class LoginPage implements OnInit {
 
     const {
       fullName,
-      email,
       phone,
       otp_code,
       password,
@@ -116,25 +126,22 @@ export class LoginPage implements OnInit {
 
     this.isSubmitting = true;
 
-    this.auth
-      .register({
-        fullName,
-        email: email || `${phone}@phone.local`,
-        phone,
-        password,
-        otp_code,
-      })
-      .subscribe({
-        next: () => this.router.navigate(['/profile']),
-        error: err => {
-          this.showAlert(
-            this.t('AUTH.REGISTER_FAILED'),
-            err?.message || this.t('COMMON.TRY_AGAIN'),
-          );
-          this.isSubmitting = false;
-        },
-        complete: () => (this.isSubmitting = false),
-      });
+    this.auth.register({
+      fullName,
+      phone,
+      password,
+      otp_code,
+    }).subscribe({
+      next: () => this.router.navigate(['/profile']),
+      error: err => {
+        this.showAlert(
+          this.t('AUTH.REGISTER_FAILED'),
+          err?.message || this.t('COMMON.TRY_AGAIN'),
+        );
+        this.isSubmitting = false;
+      },
+      complete: () => (this.isSubmitting = false),
+    });
   }
 
   // ================= OTP =================
@@ -148,27 +155,25 @@ export class LoginPage implements OnInit {
 
     this.otpSending = true;
 
-    this.auth
-      .requestOtp({
-        phone: phoneCtrl.value,
-        purpose: 'signup',
-      })
-      .subscribe({
-        next: () => {
-          this.otpSent = true;
-          this.showAlert(
-            this.t('AUTH.OTP_SENT'),
-            this.t('AUTH.CHECK_PHONE'),
-          );
-        },
-        error: err => {
-          this.showAlert(
-            this.t('AUTH.OTP_FAILED'),
-            err?.message || this.t('COMMON.TRY_AGAIN'),
-          );
-        },
-        complete: () => (this.otpSending = false),
-      });
+    this.auth.requestOtp({
+      phone: phoneCtrl.value,
+      purpose: 'signup',
+    }).subscribe({
+      next: () => {
+        this.otpSent = true;
+        this.showAlert(
+          this.t('AUTH.OTP_SENT'),
+          this.t('AUTH.CHECK_PHONE'),
+        );
+      },
+      error: err => {
+        this.showAlert(
+          this.t('AUTH.OTP_FAILED'),
+          err?.message || this.t('COMMON.TRY_AGAIN'),
+        );
+      },
+      complete: () => (this.otpSending = false),
+    });
   }
 
   // ================= SOCIAL =================
@@ -198,28 +203,35 @@ export class LoginPage implements OnInit {
 
     this.isSubmitting = true;
 
-    this.auth
-      .exchangeOAuthCode({
-        provider,
-        code,
-        redirectUri: `${window.location.origin}/auth/login`,
-      })
-      .subscribe({
-        next: () => {
-          window.history.replaceState({}, document.title, '/auth/login');
-          this.router.navigate(['/profile']);
-        },
-        error: err => {
-          this.showAlert(
-            this.t('AUTH.SSO_FAILED'),
-            err?.message || this.t('COMMON.TRY_AGAIN'),
-          );
-          this.isSubmitting = false;
-        },
-      });
+    this.auth.exchangeOAuthCode({
+      provider,
+      code,
+      redirectUri: `${window.location.origin}/auth/login`,
+    }).subscribe({
+      next: () => {
+        window.history.replaceState({}, document.title, '/auth/login');
+        this.router.navigate(['/profile']);
+      },
+      error: err => {
+        this.showAlert(
+          this.t('AUTH.SSO_FAILED'),
+          err?.message || this.t('COMMON.TRY_AGAIN'),
+        );
+        this.isSubmitting = false;
+      },
+    });
   }
 
   // ================= HELPERS =================
+  isInvalid(form: FormGroup, control: string): boolean {
+    const c = form.get(control);
+    return !!(c && c.invalid && (c.dirty || c.touched));
+  }
+
+  goToForgotPassword(): void {
+    this.router.navigate(['/auth/forgot-password']);
+  }
+
   private async showAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
       header,
@@ -231,9 +243,5 @@ export class LoginPage implements OnInit {
 
   private t(key: string): string {
     return this.translate.instant(key);
-  }
-
-  goToForgotPassword(){
-    
   }
 }

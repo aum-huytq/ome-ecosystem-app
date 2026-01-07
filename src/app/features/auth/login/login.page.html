@@ -12,35 +12,67 @@
       <img src="assets/images/logo/e-teaching.png" alt="E-Teaching" />
     </div>
 
+    <!-- CARD -->
     <div class="auth-card">
 
       <!-- TABS -->
       <div class="auth-tabs">
-        <button class="tab-btn" [class.active]="mode==='login'" (click)="mode='login'">
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="mode === 'login'"
+          (click)="switchMode('login')"
+        >
           {{ 'AUTH.LOGIN' | translate }}
         </button>
-        <button class="tab-btn" [class.active]="mode==='register'" (click)="mode='register'">
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.active]="mode === 'register'"
+          (click)="switchMode('register')"
+        >
           {{ 'AUTH.REGISTER' | translate }}
         </button>
       </div>
 
       <!-- ================= LOGIN ================= -->
-      <form *ngIf="mode==='login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <form
+        *ngIf="mode === 'login'"
+        [formGroup]="loginForm"
+        (ngSubmit)="onLogin()"
+        autocomplete="off"
+        novalidate
+      >
 
+        <!-- PHONE -->
         <div class="input">
           <ion-icon name="call-outline"></ion-icon>
-          <input formControlName="phone" [placeholder]="'AUTH.PHONE'|translate" />
+          <input
+            type="text"
+            formControlName="phone"
+            [placeholder]="'AUTH.PHONE' | translate"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+          />
         </div>
-        <div class="error" *ngIf="loginForm.get('phone')?.touched && loginForm.get('phone')?.invalid">
+        <div class="error" *ngIf="isInvalid(loginForm,'phone')">
           {{ 'AUTH.PHONE_REQUIRED' | translate }}
         </div>
 
+        <!-- PASSWORD -->
         <div class="input">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="password" formControlName="password" [placeholder]="'AUTH.PASSWORD'|translate" />
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="'AUTH.PASSWORD' | translate"
+            autocomplete="new-password"
+          />
         </div>
-        <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
-          {{ 'AUTH.PASSWORD_INVALID' | translate }}
+        <div class="error" *ngIf="isInvalid(loginForm,'password')">
+          {{ 'AUTH.PASSWORD_RULE' | translate }}
         </div>
 
         <a class="forgot" (click)="goToForgotPassword()">
@@ -51,55 +83,120 @@
           {{ 'AUTH.LOGIN' | translate }}
         </button>
 
-        <div class="divider">{{ 'AUTH.LOGIN_WITH' | translate }}</div>
+        <div class="divider">{{ 'AUTH.OR' | translate }}</div>
 
         <div class="social">
           <button type="button" (click)="onLoginWithGoogle()">
-            <img src="assets/images/icon/google.svg" /> Google
+            <img src="assets/images/icon/google.svg" />
+            Google
           </button>
+
           <button type="button" (click)="onLoginWithFacebook()">
-            <img src="assets/images/icon/facebook.svg" /> Facebook
+            <img src="assets/images/icon/facebook.svg" />
+            Facebook
           </button>
         </div>
       </form>
 
       <!-- ================= REGISTER ================= -->
-      <form *ngIf="mode==='register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <form
+        *ngIf="mode === 'register'"
+        [formGroup]="registerForm"
+        (ngSubmit)="onRegister()"
+        autocomplete="off"
+        novalidate
+      >
 
+        <!-- FULL NAME -->
         <div class="input">
           <ion-icon name="person-outline"></ion-icon>
-          <input formControlName="fullName" [placeholder]="'AUTH.FULLNAME'|translate" />
+          <input
+            type="text"
+            formControlName="fullName"
+            [placeholder]="'AUTH.FULLNAME' | translate"
+            autocomplete="off"
+          />
         </div>
-        <div class="error" *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid">
-          {{ 'AUTH.REQUIRED' | translate }}
+        <div class="error" *ngIf="isInvalid(registerForm,'fullName')">
+          {{ 'AUTH.FULLNAME_REQUIRED' | translate }}
         </div>
 
-        <div class="input">
+        <!-- EMAIL (OPTIONAL) -->
+        <!-- <div class="input">
           <ion-icon name="mail-outline"></ion-icon>
-          <input formControlName="email" [placeholder]="'AUTH.EMAIL_OPTIONAL'|translate" />
+          <input
+            type="email"
+            formControlName="email"
+            [placeholder]="'AUTH.EMAIL_OPTIONAL' | translate"
+            autocomplete="off"
+          />
         </div>
+        <div class="error" *ngIf="isInvalid(registerForm,'email')">
+          {{ 'AUTH.EMAIL_INVALID' | translate }}
+        </div> -->
 
+        <!-- PHONE + OTP -->
         <div class="input">
           <ion-icon name="call-outline"></ion-icon>
-          <input formControlName="phone" [placeholder]="'AUTH.PHONE'|translate" />
-          <button type="button" class="otp-btn" (click)="sendOtp()" [disabled]="otpSending">
+          <input
+            type="text"
+            formControlName="phone"
+            [placeholder]="'AUTH.PHONE' | translate"
+            autocomplete="off"
+          />
+          <button
+            type="button"
+            class="otp-btn"
+            (click)="sendOtp()"
+            [disabled]="otpSending"
+          >
             {{ 'AUTH.SEND_OTP' | translate }}
           </button>
         </div>
+        <div class="error" *ngIf="isInvalid(registerForm,'phone')">
+          {{ 'AUTH.PHONE_REQUIRED' | translate }}
+        </div>
 
+        <!-- OTP -->
         <div class="input">
           <ion-icon name="key-outline"></ion-icon>
-          <input formControlName="otp_code" [placeholder]="'AUTH.OTP'|translate" />
+          <input
+            type="text"
+            formControlName="otp_code"
+            [placeholder]="'AUTH.OTP' | translate"
+            autocomplete="off"
+          />
+        </div>
+        <div class="error" *ngIf="isInvalid(registerForm,'otp_code')">
+          {{ 'AUTH.OTP_REQUIRED' | translate }}
         </div>
 
+        <!-- PASSWORD -->
         <div class="input">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="password" formControlName="password" [placeholder]="'AUTH.PASSWORD'|translate" />
+          <input
+            type="password"
+            formControlName="password"
+            [placeholder]="'AUTH.PASSWORD' | translate"
+            autocomplete="new-password"
+          />
+        </div>
+        <div class="error" *ngIf="isInvalid(registerForm,'password')">
+          {{ 'AUTH.PASSWORD_RULE' | translate }}
         </div>
 
+        <!-- CONFIRM PASSWORD -->
         <div class="input">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="password" formControlName="confirmPassword" [placeholder]="'AUTH.CONFIRM_PASSWORD'|translate" />
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            [placeholder]="'AUTH.CONFIRM_PASSWORD' | translate"
+            autocomplete="new-password"
+          />
+        </div>
+        <div class="error" *ngIf="isInvalid(registerForm,'confirmPassword')">
+          {{ 'AUTH.CONFIRM_PASSWORD_REQUIRED' | translate }}
         </div>
 
         <button class="primary-btn" type="submit" [disabled]="isSubmitting">
@@ -110,10 +207,13 @@
 
         <div class="social">
           <button type="button" (click)="onRegisterWithGoogle()">
-            <img src="assets/images/icon/google.svg" /> Google
+            <img src="assets/images/icon/google.svg" />
+            Google
           </button>
+
           <button type="button" (click)="onRegisterWithFacebook()">
-            <img src="assets/images/icon/facebook.svg" /> Facebook
+            <img src="assets/images/icon/facebook.svg" />
+            Facebook
           </button>
         </div>
       </form>
